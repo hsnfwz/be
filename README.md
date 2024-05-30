@@ -1,11 +1,11 @@
-# Portfolio
+# Bé
 
-![Portfolio](src/images/portfolio-preview.png)
+![Bé](src/images/be-preview.png)
 
-[Portfolio](https://www.husseinfawaz.ca)
+[Bé](https://bebybenjampapp.vercel.app/)
 
 ## Description
-The official website and portfolio of Hussein Fawaz, Full Stack Web Developer with 3 years work experience and 2 years freelancing experience seeking a full-time position in the tech industry.
+Website to showcase fine dining restaurant's story and menu.
 
 ## Tech Stack
 - HTML
