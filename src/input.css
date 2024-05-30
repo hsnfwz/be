@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'Playfair Display Regular';
+    font-display: block;
+    src: url(./fonts/PlayfairDisplay-Regular.woff2) format('woff2');
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: 'Playfair Display Bold';
+    font-display: block;
+    src: url(./fonts/PlayfairDisplay-Bold.woff2) format('woff2');
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: 'Playfair Display Italic';
+    font-display: block;
+    src: url(./fonts/PlayfairDisplay-Italic.woff2) format('woff2');
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: 'Playfair Display Bold Italic';
+    font-display: block;
+    src: url(./fonts/PlayfairDisplay-BoldItalic.woff2) format('woff2');
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: 'Montserrat Regular';
+    font-display: block;
+    src: url(./fonts/Montserrat-Regular.woff2) format('woff2');
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: 'Montserrat Bold';
+    font-display: block;
+    src: url(./fonts/Montserrat-Bold.woff2) format('woff2');
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: 'Montserrat Italic';
+    font-display: block;
+    src: url(./fonts/Montserrat-Italic.woff2) format('woff2');
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: 'Montserrat Bold Italic';
+    font-display: block;
+    src: url(./fonts/Montserrat-BoldItalic.woff2) format('woff2');
+  }
+}
+
+/* Custom CSS */
