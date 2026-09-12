@@ -27,26 +27,23 @@ export const site = {
   instagram: 'https://www.instagram.com/pappbenjam',
 
   hours: {
-    open: 'SUN-SAT 10am-10pm',
+    time: '6PM-11PM',
+    days: 'Tuesday-Saturday (Saturday also open for lunch)',
     closed: 'Holidays',
   },
 
-  // TODO: replace placeholders, then flip CONTACT_IS_PLACEHOLDER to false.
+  // City and country are real. Street address and postcode are not published.
   address: {
-    street: '1234 Main Street',
-    locality: 'Vancouver',
-    region: 'BC',
-    postalCode: 'A1B 2C3',
-    country: 'CA',
+    locality: 'Helsinki',
+    countryName: 'Finland',
+    country: 'FI',
   },
+
+  // TODO: still placeholders — note the phone is a Vancouver number and needs
+  // replacing with a Finnish one. Flip CONTACT_IS_PLACEHOLDER once they land.
   phone: '604.123.4567',
   phoneHref: '+16041234567',
   email: 'be@restaurant.com',
 } as const;
 
-export const formattedAddress = [
-  site.address.street,
-  site.address.locality,
-  site.address.region,
-  site.address.postalCode,
-].join(', ');
+export const formattedAddress = [site.address.locality, site.address.countryName].join(', ');

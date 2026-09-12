@@ -299,8 +299,12 @@
   z-index: -1;
 }
 
-.rule-grow-left::after {
-  transform-origin: left;
+/* Left origin only from `md` up. Below that the headings carrying this class
+   are centred, and the rule has to follow the alignment — see the note above. */
+@media (width >= 48rem) {
+  .rule-grow-left::after {
+    transform-origin: left;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {

@@ -15,12 +15,12 @@ export type Menu = {
   name: string;
   price: string;
   courses: Course[];
-  pairing: { name: string; price: string };
+  pairings: { name: string; price: string }[];
 };
 
 export const tastingMenu: Menu = {
   name: 'Menu bé',
-  price: '$300',
+  price: '€220',
   courses: [
     {
       name: 'Cauliflower and caviar',
@@ -56,8 +56,14 @@ export const tastingMenu: Menu = {
       name: 'Chocolate and hazelnut praline mousse seasoned with miso and an orange butter ice cream',
     },
   ],
-  pairing: {
-    name: 'Wine Pairing',
-    price: '$200',
-  },
+  pairings: [
+    {
+      name: 'Wine Pairing',
+      price: '€175',
+    },
+    {
+      name: 'Non-Alcoholic Pairing',
+      price: '€100',
+    },
+  ],
 };
