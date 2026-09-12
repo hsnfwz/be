@@ -1,0 +1,320 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   Typography
+   Two families, each with real weight + style axes, so <strong> and <em> pick
+   the correct face instead of being synthesised by the browser.
+   Previously these were eight separately-named families, which meant semantic
+   markup could never resolve to bold or italic.
+--------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/PlayfairDisplay-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/PlayfairDisplay-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/PlayfairDisplay-Italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/PlayfairDisplay-BoldItalic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Montserrat-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Montserrat-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Montserrat-Italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Montserrat-BoldItalic.woff2') format('woff2');
+}
+
+@theme {
+  --font-serif: 'Playfair Display', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-sans: 'Montserrat', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Tailwind's amber-300. Chosen by sampling the lit onyx and firelight in the
+     photography, which average #f1c58c — this is the nearest shade that still
+     reads unambiguously as gold at a 1px border width. */
+  --color-gold: #fcd34d;
+}
+
+@layer base {
+  :root {
+    /* Nav is 48px of type + 2 x 8px padding. Sections subtract this to fill
+       the viewport, and the mobile bottom nav offsets the body by it. */
+    --nav-height: 4rem;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    /* Line height scales inversely with type size. The font-size utilities
+       (text-3xl, text-5xl) carry their own tighter pairings and the hero sets
+       its own, so this 1.625 only reaches unsized body copy — the section
+       paragraphs, the footer and the menu card. */
+    line-height: 1.625;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@utility viewport-minus-nav {
+  min-height: calc(100vh - var(--nav-height));
+  min-height: calc(100svh - var(--nav-height));
+}
+
+/* ---------------------------------------------------------------------------
+   Reveal animation
+
+   Copy fades in while settling a few pixels downward into place.
+
+   Two rules, because the trigger differs:
+   - `.rise` runs once on load, for the hero, which is above the fold.
+   - `.rise-in-view` is driven by the scroll position via `animation-timeline`,
+     for section copy further down the page. No JavaScript involved.
+
+   Both are opt-in enhancements: the animation is only ever *added* to content
+   that is already visible, and `@supports` / `prefers-reduced-motion` only ever
+   remove it. Nothing can leave text stuck at `opacity: 0`.
+--------------------------------------------------------------------------- */
+
+/* Settles downward into place, from 16px above. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* The mirror of `rise-in`: settles upward into place, from 16px below. */
+@keyframes lift-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* No travel — just a fade. */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    animation: rise-in 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* Hero elements enter in sequence. Explicit steps rather than :nth-child,
+     because the copy pair and the button sit in different parents. */
+  .rise-step-2 {
+    animation-delay: 120ms;
+  }
+  .rise-step-3 {
+    animation-delay: 240ms;
+  }
+
+  /* Section copy starts hidden ONLY when scripting is available to reveal it
+     again — see the `js` class set in Base.astro. Without that class (no JS,
+     script blocked, script errored) these rules never match and the copy
+     renders normally. It must never be possible to strand text at opacity 0. */
+  .js .rise-in-view {
+    opacity: 0;
+  }
+
+  /* `forwards`, not a scroll timeline: a timeline is scrubbed by scroll
+     position, so it necessarily rewinds on the way back up. This latches. */
+  .js .rise-in-view.revealed {
+    animation: rise-in 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  /* Descriptions and images trail their heading slightly. */
+  .js .rise-in-view-late.revealed {
+    animation-delay: 140ms;
+  }
+
+  /* Opposite travel. Still a `.rise-in-view`, so the observer picks it up and
+     the hidden start state and no-JS fallback apply unchanged. */
+  .js .rise-in-view.reveal-from-below.revealed {
+    animation-name: lift-in;
+  }
+
+  /* Fade with no movement. Same deal — still a `.rise-in-view`. */
+  .js .rise-in-view.reveal-fade.revealed {
+    animation-name: fade-in;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Menu button hover
+
+   Black fills in from the left on hover, and on hover-out it empties in the
+   same direction rather than rewinding.
+
+   The trick is that `background-position` is NOT transitioned, so it switches
+   instantly while `background-size` animates:
+     rest  -> anchored right, 0% wide
+     hover -> anchored left,  100% wide   (grows rightward from the left edge)
+   Leaving hover snaps the anchor back to the right, so the black shrinks toward
+   the right edge — its left edge travels rightward, emptying left-to-right.
+
+   A pseudo-element with `transform-origin` swapping would do the same thing;
+   this keeps it to one element and no extra markup.
+--------------------------------------------------------------------------- */
+
+.button-fill {
+  border: 1px solid #fff;
+  background-color: #fff;
+  background-image: linear-gradient(#000, #000);
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 0% 100%;
+  transition:
+    background-size 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 340ms ease,
+    color 340ms ease;
+}
+
+.button-fill:hover,
+.button-fill:focus-visible {
+  background-position: left center;
+  background-size: 100% 100%;
+  border-color: var(--color-gold);
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button-fill {
+    transition-duration: 1ms;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Animated heading rules
+
+   The gold rule under a heading draws itself in. Which way it travels follows
+   the heading's alignment: centred headings open outwards from the middle,
+   left-aligned ones sweep left to right.
+
+   It is a pseudo-element rather than a `border-bottom` because a border cannot
+   be scaled independently — scaling the element would scale the type with it.
+
+   Composed from three parts:
+     .rule-grow            the rule itself (centre origin by default)
+     .rule-grow-left       sweep from the left instead
+     .rule-grow-on-load    play once on load            — the hero
+     .rule-grow-on-reveal  play when the observer reveals the section
+
+   The rule's resting state is fully drawn. Only the animations hold it
+   collapsed, and both are behind `prefers-reduced-motion` (and `.js` for the
+   scroll-revealed ones), so any failure leaves a complete rule, never none.
+--------------------------------------------------------------------------- */
+
+@keyframes rule-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.rule-grow {
+  position: relative;
+  /* Establishes a stacking context so the rule's negative z-index stays inside
+     this element — behind its own text, but still in front of whatever is
+     behind the heading. Without it the rule would drop behind the section
+     background and vanish. */
+  isolation: isolate;
+}
+
+.rule-grow::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background-color: var(--color-gold);
+  transform: scaleX(1);
+  transform-origin: center;
+  /* Behind the type: descenders cross in front of the rule rather than being
+     sliced by it. */
+  z-index: -1;
+}
+
+.rule-grow-left::after {
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rule-grow-on-load::after {
+    animation: rule-grow 640ms cubic-bezier(0.22, 1, 0.36, 1) 400ms both;
+  }
+
+  /* Held collapsed until the section is revealed, then drawn just after the
+     heading and description have settled. */
+  .js .rule-grow-on-reveal::after {
+    transform: scaleX(0);
+  }
+
+  .js .rule-grow-on-reveal.revealed::after {
+    animation: rule-grow 640ms cubic-bezier(0.22, 1, 0.36, 1) 260ms both;
+  }
+}

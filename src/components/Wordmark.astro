@@ -1,0 +1,19 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<a
+  class={`inline-flex rounded-xs focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current ${className}`}
+  href="/"
+  aria-label={`${site.name} — home`}
+>
+  <span class="font-serif text-5xl font-bold" aria-hidden="true">
+    bé
+  </span>
+</a>

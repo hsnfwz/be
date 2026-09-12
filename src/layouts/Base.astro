@@ -1,0 +1,104 @@
+---
+import Seo from '../components/Seo.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <Seo title={title} description={description} />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/be-logo.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {/* Marks the document as scripted *before* first paint. The reveal styles
+        are gated on this class, so if this never runs the copy simply renders
+        without animation instead of staying hidden. */}
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+    <!-- The two faces used above the fold: the wordmark and body copy. -->
+    <link
+      rel="preload"
+      href="/fonts/PlayfairDisplay-Bold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/Montserrat-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+  </head>
+
+  <body class="relative flex w-full flex-col items-center font-serif">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-100 focus:bg-black focus:px-5 focus:py-2 focus:font-sans focus:text-white"
+    >
+      Skip to content
+    </a>
+
+    <Nav />
+
+    <main
+      id="main"
+      class="flex w-full flex-col gap-6 sm:gap-10 md:gap-10 lg:gap-12 xl:gap-14 2xl:gap-16"
+    >
+      <slot />
+    </main>
+
+    <Footer />
+
+    <script>
+      // Reveal each section's copy once, the first time that section is half in
+      // view, then stop watching it. Deliberately one-way: re-scrolling past a
+      // section leaves it revealed.
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const sections = document.querySelectorAll<HTMLElement>('.reveal-scope');
+
+      for (const section of sections) {
+        const copy = section.querySelectorAll('.rise-in-view');
+        if (!copy.length) continue;
+
+        if (reduce || !('IntersectionObserver' in window)) {
+          copy.forEach((el) => el.classList.add('revealed'));
+          continue;
+        }
+
+        // A section taller than the viewport can never reach 0.5 visibility, so
+        // cap the threshold at what is actually achievable for it.
+        const reachable = (window.innerHeight / section.offsetHeight) * 0.9;
+        const threshold = Math.min(0.5, reachable);
+
+        const io = new IntersectionObserver(
+          (entries, observer) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              copy.forEach((el) => el.classList.add('revealed'));
+              observer.disconnect();
+            }
+          },
+          { threshold },
+        );
+        io.observe(section);
+      }
+    </script>
+  </body>
+</html>

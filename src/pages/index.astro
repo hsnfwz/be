@@ -1,0 +1,147 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+
+import hero from '../assets/restaurant-hero.jpg';
+import interior from '../assets/restaurant.jpg';
+import dishLobster from '../assets/food-1.jpg';
+import dishBerry from '../assets/food-5.jpg';
+import chef from '../assets/chef.jpg';
+---
+
+<Base title={site.name} description={site.description}>
+  <section class="relative">
+    <Image
+      src={hero}
+      alt="The dining room at night: a long chef's counter set with candles and glassware wrapping an open kitchen, with a wood fire burning at its centre beneath a suspended hood."
+      widths={[640, 960, hero.width]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="h-[calc(100svh-var(--nav-height))] w-full object-cover"
+    />
+
+    {/* 40px between the copy block and the button; 20px between the two lines. */}
+    <div class="absolute inset-0 flex flex-col items-center justify-center gap-10 bg-black/45 px-10">
+      {/* These two lines repeat the <h1> and intro copy in the next section, so
+          they are hidden from assistive tech rather than announced twice.
+          The link is not — it is real navigation and must stay reachable. */}
+      <div class="flex w-full flex-col items-center gap-5">
+        <p
+          aria-hidden="true"
+          class="rise rule-grow rule-grow-on-load w-full text-center font-serif text-[1.875rem] leading-[1.2] font-bold text-balance text-white md:text-[4.5rem] md:leading-[1.05]"
+        >
+          bé by {site.chef}
+        </p>
+        <p
+          aria-hidden="true"
+          class="rise rise-step-2 w-full text-center font-sans text-[1rem] leading-normal text-balance text-white md:text-[1.25rem]"
+        >
+          A unique restaurant concept in the heart of Vancouver
+        </p>
+      </div>
+      <a
+        href="/menu"
+        class="rise rise-step-3 button-fill w-full max-w-[200px] px-5 py-2 text-center font-sans leading-normal text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+      >
+        Menu
+      </a>
+    </div>
+  </section>
+
+  <section class="reveal-scope viewport-minus-nav flex flex-col items-center justify-center gap-10 md:flex-row">
+    <div class="flex w-full flex-col px-10 md:w-1/2 md:self-stretch md:pr-0 md:pl-10">
+      {/* Splitting the free space 1 : 2 sits the copy a third of the way down,
+          at whatever height the section ends up — no viewport maths needed. */}
+      <div class="hidden md:block md:grow"></div>
+      <div class="flex flex-col gap-5">
+        <h1 class="rise-in-view rule-grow rule-grow-left rule-grow-on-reveal w-full font-serif text-3xl font-bold">
+          bé by {site.chef}
+        </h1>
+        <p class="rise-in-view rise-in-view-late font-sans">
+          bé by {site.chef} brings a unique restaurant concept to the heart of Vancouver.
+        </p>
+      </div>
+      <div class="hidden md:block md:grow-[2]"></div>
+    </div>
+    <div class="w-full md:w-1/2">
+      <div class="aspect-square w-full">
+        <Image
+          src={interior}
+          alt="A dimly lit corridor in the restaurant, lined with dark timber and polished stone, leading past a backlit panel of amber onyx."
+          widths={[480, 768, 1080, interior.width]}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          class="rise-in-view rise-in-view-late reveal-fade size-full object-cover"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal-scope viewport-minus-nav flex flex-col items-center justify-center gap-12 px-10">
+    <div class="flex max-w-[800px] flex-col items-center gap-5 text-center">
+      <h2 class="rise-in-view rule-grow rule-grow-on-reveal w-full font-serif text-3xl font-bold">
+        Nordic-Asian Cuisine
+      </h2>
+      <p class="rise-in-view rise-in-view-late font-sans">
+        A kitchen with an ideology that is rooted deep in Nordic cuisine mixed with an Asian
+        influence that gives even the more affluent diner a new perspective.
+      </p>
+    </div>
+
+    {/* Staggered pair: the right plate hangs 64px below the left. */}
+    <div class="grid w-full max-w-[1064px] grid-cols-2 items-start gap-10">
+      <Image
+        src={dishLobster}
+        alt="An overhead view of a plated course: lobster and an oyster resting in an amber shellfish broth, finished with dill and white flowers."
+        width={512}
+        height={512}
+        fit="cover"
+        position="center"
+        densities={[1, 2]}
+        sizes="(min-width: 1128px) 512px, 45vw"
+        class="rise-in-view rise-in-view-late aspect-square w-full object-cover object-center"
+      />
+      <Image
+        src={dishBerry}
+        alt="A close overhead view of a dessert: a raspberry sorbet quenelle resting on a tart shell ringed with small pale flowers, in a pool of crimson berry coulis."
+        width={512}
+        height={512}
+        fit="cover"
+        position="center"
+        densities={[1, 2]}
+        sizes="(min-width: 1128px) 512px, 45vw"
+        class="rise-in-view rise-in-view-late reveal-from-below mt-16 aspect-square w-full object-cover object-center"
+      />
+    </div>
+  </section>
+
+  <section class="reveal-scope viewport-minus-nav flex flex-col-reverse items-center justify-center gap-10 md:flex-row">
+    <div class="w-full md:w-1/2">
+      <div class="aspect-square w-full">
+        <Image
+          src={chef}
+          alt="Benjam Papp in chef's whites and a navy apron, arms folded, standing beside the counter in the empty dining room."
+          widths={[480, 768, 1080, chef.width]}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          class="rise-in-view rise-in-view-late reveal-fade size-full object-cover"
+        />
+      </div>
+    </div>
+    <div class="flex w-full flex-col px-10 md:w-1/2 md:self-stretch md:pr-10 md:pl-0">
+      {/* Splitting the free space 1 : 2 sits the copy a third of the way down,
+          at whatever height the section ends up — no viewport maths needed. */}
+      <div class="hidden md:block md:grow"></div>
+      <div class="flex flex-col gap-5">
+        <h2 class="rise-in-view rule-grow rule-grow-left rule-grow-on-reveal w-full font-serif text-3xl font-bold">
+          Our Story
+        </h2>
+        <p class="rise-in-view rise-in-view-late font-sans">
+          bé seeks to provide its clients with a memorable experience by creating a story behind
+          each dish and ingredient that is plated.
+        </p>
+      </div>
+      <div class="hidden md:block md:grow-[2]"></div>
+    </div>
+  </section>
+</Base>
