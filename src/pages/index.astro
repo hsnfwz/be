@@ -90,7 +90,7 @@ import chef from '../assets/chef.jpg';
     </div>
 
     {/* Staggered pair: the right plate hangs 64px below the left. */}
-    <div class="grid w-full max-w-[1064px] grid-cols-2 items-start gap-10">
+    <div class="grid w-full max-w-[1064px] grid-cols-1 items-start justify-items-center gap-10 md:grid-cols-2">
       <Image
         src={dishLobster}
         alt="An overhead view of a plated course: lobster and an oyster resting in an amber shellfish broth, finished with dill and white flowers."
@@ -100,7 +100,7 @@ import chef from '../assets/chef.jpg';
         position="center"
         densities={[1, 2]}
         sizes="(min-width: 1128px) 512px, 45vw"
-        class="rise-in-view rise-in-view-late aspect-square w-full object-cover object-center"
+        class="rise-in-view rise-in-view-late aspect-square w-full max-w-[512px] object-cover object-center"
       />
       <Image
         src={dishBerry}
@@ -111,7 +111,7 @@ import chef from '../assets/chef.jpg';
         position="center"
         densities={[1, 2]}
         sizes="(min-width: 1128px) 512px, 45vw"
-        class="rise-in-view rise-in-view-late reveal-from-below mt-16 aspect-square w-full object-cover object-center"
+        class="rise-in-view rise-in-view-late reveal-from-below aspect-square w-full max-w-[512px] object-cover object-center md:mt-16"
       />
     </div>
   </section>
