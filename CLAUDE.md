@@ -43,7 +43,8 @@ These are deliberate. Don't "fix" them without asking:
   render it `BÉ` and undo that; don't add one back.
 - **Nav** is sticky at the top, identically at every viewport — there is no
   separate mobile treatment, and it shouldn't gain one. Its height is
-  `--nav-height` (4rem) in `global.css`. Full-height sections use the
+  `--nav-height` (4.25rem) in `global.css`, which must track the real bar
+  height if its padding changes. Full-height sections use the
   `viewport-minus-nav` utility — don't hardcode `calc(100vh - 64px)` again.
 
 ## Motion

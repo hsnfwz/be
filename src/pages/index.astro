@@ -23,7 +23,7 @@ import chef from '../assets/chef.jpg';
     />
 
     {/* 40px between the copy block and the button; 20px between the two lines. */}
-    <div class="absolute inset-0 flex flex-col items-center justify-center gap-10 bg-black/45 px-10">
+    <div class="absolute inset-0 flex flex-col items-center justify-center gap-10 bg-black/45 px-5">
       {/* These two lines repeat the <h1> and intro copy in the next section, so
           they are hidden from assistive tech rather than announced twice.
           The link is not — it is real navigation and must stay reachable. */}
@@ -36,22 +36,30 @@ import chef from '../assets/chef.jpg';
         </p>
         <p
           aria-hidden="true"
-          class="rise rise-step-2 w-full text-center font-sans text-[1rem] leading-normal text-balance text-white md:text-[1.25rem]"
+          class="rise anim-step-2 w-full text-center font-sans text-[1rem] italic leading-normal text-balance text-white md:text-[1.25rem]"
         >
           A unique restaurant concept in the centre of Helsinki
         </p>
       </div>
-      <a
-        href="/menu"
-        class="rise rise-step-3 button-fill w-full max-w-[200px] px-5 py-2 text-center font-sans leading-normal text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-      >
-        Menu
-      </a>
+      <div class="rise anim-step-3 flex w-full flex-col items-center justify-center gap-5 md:flex-row">
+        <a
+          href="/menu"
+          class="button-fill w-full max-w-[200px] px-5 py-2 text-center font-sans leading-normal focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        >
+          View Menu
+        </a>
+        <a
+          href="/book"
+          class="button-fill button-fill-brass w-full max-w-[200px] px-5 py-2 text-center font-sans leading-normal focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        >
+          Reserve a Table
+        </a>
+      </div>
     </div>
   </section>
 
   <section class="reveal-scope viewport-minus-nav flex flex-col items-center justify-center gap-10 md:flex-row">
-    <div class="flex w-full flex-col px-10 md:w-1/2 md:self-stretch md:pr-0 md:pl-10">
+    <div class="flex w-full flex-col px-5 md:w-1/2 md:self-stretch md:pr-0 md:pl-5">
       {/* Splitting the free space 1 : 2 sits the copy a third of the way down,
           at whatever height the section ends up — no viewport maths needed. */}
       <div class="hidden md:block md:grow"></div>
@@ -78,7 +86,7 @@ import chef from '../assets/chef.jpg';
     </div>
   </section>
 
-  <section class="reveal-scope viewport-minus-nav flex flex-col items-center justify-center gap-12 px-10">
+  <section class="reveal-scope viewport-minus-nav flex flex-col items-center justify-center gap-12 px-5">
     <div class="flex max-w-[800px] flex-col items-center gap-5 text-center">
       <h2 class="rise-in-view rule-grow rule-grow-on-reveal w-full font-serif text-3xl font-bold">
         Nordic-Asian Cuisine
@@ -128,7 +136,7 @@ import chef from '../assets/chef.jpg';
         />
       </div>
     </div>
-    <div class="flex w-full flex-col px-10 md:w-1/2 md:self-stretch md:pr-10 md:pl-0">
+    <div class="flex w-full flex-col px-5 md:w-1/2 md:self-stretch md:pr-5 md:pl-0">
       {/* Splitting the free space 1 : 2 sits the copy a third of the way down,
           at whatever height the section ends up — no viewport maths needed. */}
       <div class="hidden md:block md:grow"></div>

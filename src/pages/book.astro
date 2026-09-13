@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+---
+
+<Base title={`Book - ${site.name}`} description={`Reserve a table at ${site.name}.`}>
+  <section class="viewport-minus-nav flex flex-col items-center justify-center px-5">
+    <h1 class="rise rule-grow rule-grow-on-load w-full max-w-[800px] text-center font-serif text-3xl font-bold">
+      Reservations Coming Soon
+    </h1>
+  </section>
+</Base>

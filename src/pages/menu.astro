@@ -7,19 +7,14 @@ const description = `${tastingMenu.name} — a ${tastingMenu.courses.length}-cou
 ---
 
 <Base title={`Menu - ${site.name}`} description={description}>
-  <section class="mx-10 flex flex-col items-center gap-10 text-center">
-    <div class="mt-10 flex flex-col gap-5">
-      <h1 class="font-serif text-3xl font-bold">Menu bé</h1>
-      <p class="font-sans">Nordic-Asian cuisine by {site.chef}.</p>
+  <section class="mx-5 flex flex-col items-center gap-10 text-center">
+    <div class="mt-10 flex w-full max-w-[800px] flex-col gap-5">
+      <h1 class="rise rule-grow rule-grow-on-load w-full font-serif text-3xl font-bold">Menu bé</h1>
+      <p class="rise anim-step-2 font-sans">Nordic-Asian cuisine by {site.chef}.</p>
     </div>
 
-    <article class="w-full max-w-[800px] bg-white p-10 font-sans drop-shadow">
-      <header class="flex flex-col gap-1 uppercase">
-        <h2 class="font-bold">{tastingMenu.name}</h2>
-        <p>{tastingMenu.price}</p>
-      </header>
-
-      <ol class="mt-10 flex flex-col gap-6 uppercase">
+    <article class="fade anim-step-3 w-full max-w-[800px] bg-white p-10 font-sans drop-shadow">
+      <ol class="flex flex-col gap-6 uppercase">
         {tastingMenu.courses.map((course) => (
           <li class="flex flex-col gap-1">
             <h3 class="font-normal">{course.name}</h3>
@@ -28,7 +23,12 @@ const description = `${tastingMenu.name} — a ${tastingMenu.courses.length}-cou
         ))}
       </ol>
 
-      <footer class="mt-10 flex flex-col gap-5 border-t border-gold pt-10 uppercase">
+      <footer class="mt-10 flex flex-col gap-5 uppercase">
+        <div class="flex flex-col gap-1">
+          <h2 class="font-bold">{tastingMenu.name}</h2>
+          <p>{tastingMenu.price}</p>
+        </div>
+
         {tastingMenu.pairings.map((pairing) => (
           <div class="flex flex-col gap-1">
             <h2 class="font-bold">{pairing.name}</h2>

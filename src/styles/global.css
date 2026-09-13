@@ -74,20 +74,37 @@
      photography, which average #f1c58c — this is the nearest shade that still
      reads unambiguously as gold at a 1px border width. */
   --color-gold: #fcd34d;
+
+  /* Tailwind's yellow-600, for filled areas rather than hairlines. The site's
+     metallic mid-tones average #9d6844; matching that literally gives a brown,
+     so this is the nearest shade that still reads as brass. Deeper than
+     --color-gold on purpose: a 1px rule needs brightness to register, a
+     200px button does not and would shout. 7.1:1 with black text. */
+  --color-brass: #ca8a04;
 }
 
 @layer base {
   :root {
-    /* Nav is 48px of type + 2 x 8px padding. Sections subtract this to fill
-       the viewport, and the mobile bottom nav offsets the body by it. */
-    --nav-height: 4rem;
+    /* Nav is 48px of wordmark type + 2 x 10px padding. Full-height sections
+       subtract this via `viewport-minus-nav`, so it must track the real bar
+       height — change the nav's padding and this has to follow. */
+    --nav-height: 4.25rem;
   }
 
   html {
     scroll-behavior: smooth;
+
+    /* Paints the canvas — the area revealed past the top and bottom of the
+       page when a touch device rubber-bands. Black, so it reads as the nav
+       and footer continuing rather than a white flash. `html`'s background
+       wins the canvas; `body`'s below only paints the page box itself. */
+    background-color: #000;
   }
 
   body {
+    /* The page proper stays white. */
+    background-color: #fff;
+
     /* Line height scales inversely with type size. The font-size utilities
        (text-3xl, text-5xl) carry their own tighter pairings and the hero sets
        its own, so this 1.625 only reaches unsized body copy — the section
@@ -110,16 +127,16 @@
 /* ---------------------------------------------------------------------------
    Reveal animation
 
-   Copy fades in while settling a few pixels downward into place.
+   Content fades in, optionally settling a few pixels into place.
 
-   Two rules, because the trigger differs:
-   - `.rise` runs once on load, for the hero, which is above the fold.
-   - `.rise-in-view` is driven by the scroll position via `animation-timeline`,
-     for section copy further down the page. No JavaScript involved.
+   Split by trigger, not by effect:
+   - `.rise` / `.fade` run once on load, for anything above the fold.
+   - `.rise-in-view` is revealed by the IntersectionObserver in `Base.astro`
+     the first time its section is half in view, and then stays revealed.
 
-   Both are opt-in enhancements: the animation is only ever *added* to content
-   that is already visible, and `@supports` / `prefers-reduced-motion` only ever
-   remove it. Nothing can leave text stuck at `opacity: 0`.
+   Every rule here is an opt-in enhancement layered onto content that already
+   renders. `prefers-reduced-motion` and the `.js` gate only ever remove them,
+   so nothing can leave content stranded at `opacity: 0`.
 --------------------------------------------------------------------------- */
 
 /* Settles downward into place, from 16px above. */
@@ -161,12 +178,18 @@
     animation: rise-in 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
-  /* Hero elements enter in sequence. Explicit steps rather than :nth-child,
-     because the copy pair and the button sit in different parents. */
-  .rise-step-2 {
+  /* Same entrance without the travel. */
+  .fade {
+    animation: fade-in 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* Elements enter in sequence. These only set a delay, so they compose with
+     either `.rise` or `.fade`. Explicit steps rather than :nth-child, because
+     the hero's copy pair and its buttons sit in different parents. */
+  .anim-step-2 {
     animation-delay: 120ms;
   }
-  .rise-step-3 {
+  .anim-step-3 {
     animation-delay: 240ms;
   }
 
@@ -219,12 +242,24 @@
 --------------------------------------------------------------------------- */
 
 .button-fill {
-  border: 1px solid #fff;
-  background-color: #fff;
-  background-image: linear-gradient(#000, #000);
+  /* Swapping these four is all `.button-fill-invert` does. */
+  --button-bg: #fff;
+  --button-sweep: #000;
+  --button-text: #000;
+  /* Brass, matching the reserve CTA — the label picks up the accent as the
+     black sweeps across, rather than the two buttons hovering differently. */
+  --button-text-hover: var(--color-brass);
+
+  --button-border: #fff;
+  --button-border-hover: var(--color-gold);
+
+  border: 1px solid var(--button-border);
+  background-color: var(--button-bg);
+  background-image: linear-gradient(var(--button-sweep), var(--button-sweep));
   background-repeat: no-repeat;
   background-position: right center;
   background-size: 0% 100%;
+  color: var(--button-text);
   transition:
     background-size 340ms cubic-bezier(0.22, 1, 0.36, 1),
     border-color 340ms ease,
@@ -235,8 +270,27 @@
 .button-fill:focus-visible {
   background-position: left center;
   background-size: 100% 100%;
-  border-color: var(--color-gold);
-  color: #fff;
+  border-color: var(--button-border-hover);
+  color: var(--button-text-hover);
+}
+
+/* The mirror: dark at rest, sweeping white. Reads as the secondary of the pair
+   and sits naturally on the black nav. */
+.button-fill-invert {
+  --button-bg: #000;
+  --button-sweep: #fff;
+  --button-text: #fff;
+  --button-text-hover: #000;
+}
+
+/* Brass, for the reservation CTA. Sweeps to black on hover with the label
+   picking up the brass, so the pair inverts rather than changing hue. */
+.button-fill-brass {
+  --button-bg: var(--color-brass);
+  --button-sweep: #000;
+  --button-text: #000;
+  --button-text-hover: var(--color-brass);
+  --button-border: var(--color-brass);
 }
 
 @media (prefers-reduced-motion: reduce) {
