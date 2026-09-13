@@ -59,6 +59,8 @@ if (!CONTACT_IS_PLACEHOLDER) {
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={imageUrl.href} />
 
-<meta name="theme-color" content="#ffffff" />
+{/* Tints the browser chrome and the area around the viewport on iOS —
+    black so it continues the nav rather than flashing white. */}
+<meta name="theme-color" content="#000000" />
 
 <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)}></script>
