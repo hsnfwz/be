@@ -23,14 +23,14 @@ import chef from '../assets/chef.jpg';
     />
 
     {/* 40px between the copy block and the button; 20px between the two lines. */}
-    <div class="absolute inset-0 flex flex-col items-center justify-center gap-5 bg-black/45 px-5 md:gap-10">
+    <div class="absolute inset-0 flex flex-col items-center justify-center gap-5 bg-black/45 px-5 md:gap-20">
       {/* These two lines repeat the <h1> and intro copy in the next section, so
           they are hidden from assistive tech rather than announced twice.
           The link is not — it is real navigation and must stay reachable. */}
-      <div class="flex w-full flex-col items-center gap-5">
+      <div class="flex w-full flex-col items-center gap-5 md:gap-10">
         <p
           aria-hidden="true"
-          class="rise rule-grow rule-grow-on-load w-full text-center font-serif text-[1.875rem] leading-[1.2] font-bold text-balance text-white md:text-[4.5rem] md:leading-[1.05]"
+          class="rise rule-grow rule-grow-on-load w-full text-center font-serif text-[2.625rem] leading-[1.15] font-bold text-balance text-white md:text-[5.25rem] md:leading-[1]"
         >
           bé by {site.chef}
         </p>
@@ -58,20 +58,16 @@ import chef from '../assets/chef.jpg';
     </div>
   </section>
 
-  <section class="reveal-scope viewport-minus-nav flex flex-col items-center justify-center gap-10 md:flex-row">
-    <div class="flex w-full flex-col px-5 md:w-1/2 md:self-stretch md:pr-0 md:pl-5">
-      {/* Splitting the free space 1 : 2 sits the copy a third of the way down,
-          at whatever height the section ends up — no viewport maths needed. */}
-      <div class="hidden md:block md:grow"></div>
+  <section class="reveal-scope flex flex-col items-center justify-center gap-10 md:flex-row">
+    <div class="flex w-full flex-col px-5 md:w-1/2 md:pr-0 md:pl-5">
       <div class="flex flex-col gap-5 text-center md:text-left">
-        <h1 class="rise-in-view rule-grow rule-grow-left rule-grow-on-reveal w-full font-serif text-3xl font-bold">
+        <h1 class="rise-in-view rule-grow rule-grow-left rule-grow-on-reveal w-full font-serif text-[1.5rem] leading-[1.25] font-bold md:text-[2.625rem] md:leading-[1.15]">
           bé by {site.chef}
         </h1>
         <p class="rise-in-view rise-in-view-late font-sans">
           bé by {site.chef} brings a unique restaurant concept to the centre of Helsinki.
         </p>
       </div>
-      <div class="hidden md:block md:grow-[2]"></div>
     </div>
     <div class="w-full md:w-1/2">
       <div class="aspect-square w-full">
@@ -86,9 +82,9 @@ import chef from '../assets/chef.jpg';
     </div>
   </section>
 
-  <section class="reveal-scope viewport-minus-nav flex flex-col items-center justify-center gap-12 px-5">
+  <section class="reveal-scope flex flex-col items-center justify-center gap-12 px-5">
     <div class="flex max-w-[800px] flex-col items-center gap-5 text-center">
-      <h2 class="rise-in-view rule-grow rule-grow-on-reveal w-full font-serif text-3xl font-bold">
+      <h2 class="rise-in-view rule-grow rule-grow-on-reveal w-full font-serif text-[1.5rem] leading-[1.25] font-bold md:text-[2.625rem] md:leading-[1.15]">
         Nordic-Asian Cuisine
       </h2>
       <p class="rise-in-view rise-in-view-late font-sans">
@@ -124,7 +120,7 @@ import chef from '../assets/chef.jpg';
     </div>
   </section>
 
-  <section class="reveal-scope viewport-minus-nav flex flex-col-reverse items-center justify-center gap-10 md:flex-row">
+  <section class="reveal-scope flex flex-col-reverse items-center justify-center gap-10 md:flex-row">
     <div class="w-full md:w-1/2">
       <div class="aspect-square w-full">
         <Image
@@ -136,12 +132,9 @@ import chef from '../assets/chef.jpg';
         />
       </div>
     </div>
-    <div class="flex w-full flex-col px-5 md:w-1/2 md:self-stretch md:pr-5 md:pl-0">
-      {/* Splitting the free space 1 : 2 sits the copy a third of the way down,
-          at whatever height the section ends up — no viewport maths needed. */}
-      <div class="hidden md:block md:grow"></div>
+    <div class="flex w-full flex-col px-5 md:w-1/2 md:pr-5 md:pl-0">
       <div class="flex flex-col gap-5 text-center md:text-left">
-        <h2 class="rise-in-view rule-grow rule-grow-left rule-grow-on-reveal w-full font-serif text-3xl font-bold">
+        <h2 class="rise-in-view rule-grow rule-grow-left rule-grow-on-reveal w-full font-serif text-[1.5rem] leading-[1.25] font-bold md:text-[2.625rem] md:leading-[1.15]">
           Our Story
         </h2>
         <p class="rise-in-view rise-in-view-late font-sans">
@@ -149,7 +142,6 @@ import chef from '../assets/chef.jpg';
           each dish and ingredient that is plated.
         </p>
       </div>
-      <div class="hidden md:block md:grow-[2]"></div>
     </div>
   </section>
 </Base>

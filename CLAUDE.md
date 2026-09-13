@@ -34,11 +34,14 @@ These are deliberate. Don't "fix" them without asking:
   `font-weight` / `font-style` axes — so use `font-bold` and `italic`, never a
   weight-specific family name.
 - **Line height scales inversely with type size.** Display is tight, body is
-  loose — 72px hero at 1.05, 30px headings at 1.2, 16px body at 1.625. Body
+  loose. The curve in use: 84px hero at 1.0, 42px headings at 1.15, 24px
+  headings at 1.25, 16px body at 1.625 (mobile hero 42px at 1.15). Body
   leading is set once on `body` in `global.css`; the font-size utilities carry
   their own pairings, so only unsized copy inherits it. The button is pinned to
   1.5 so a UI control doesn't sit on the body scale.
-- **Headings are serif `text-3xl`, in normal sentence case** — not uppercased.
+- **Section headings are serif, 24px on mobile and 42px from `md`**, in normal
+  sentence case — not uppercased. They carry explicit `leading-*`, because the
+  sizes are arbitrary values and so bring no paired line-height of their own.
   The brand is lowercase `bé` everywhere, so a `uppercase` transform would
   render it `BÉ` and undo that; don't add one back.
 - **Nav** is sticky at the top, identically at every viewport — there is no

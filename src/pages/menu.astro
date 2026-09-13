@@ -9,11 +9,13 @@ const description = `${tastingMenu.name} — a ${tastingMenu.courses.length}-cou
 <Base title={`Menu - ${site.name}`} description={description}>
   <section class="mx-5 flex flex-col items-center gap-10 text-center">
     <div class="mt-10 flex w-full max-w-[800px] flex-col gap-5">
-      <h1 class="rise rule-grow rule-grow-on-load w-full font-serif text-3xl font-bold">Menu bé</h1>
+      <h1 class="rise rule-grow rule-grow-on-load w-full font-serif text-[1.5rem] leading-[1.25] font-bold md:text-[2.625rem] md:leading-[1.15]">
+        Menu bé
+      </h1>
       <p class="rise anim-step-2 font-sans">Nordic-Asian cuisine by {site.chef}.</p>
     </div>
 
-    <article class="fade anim-step-3 w-full max-w-[800px] bg-white p-10 font-sans drop-shadow">
+    <article class="fade anim-step-3 mb-10 w-full max-w-[800px] bg-white p-10 font-sans drop-shadow">
       <ol class="flex flex-col gap-6 uppercase">
         {tastingMenu.courses.map((course) => (
           <li class="flex flex-col gap-1">

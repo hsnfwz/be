@@ -107,10 +107,10 @@
        colour puts a second full-height surface in play, which is what tends to
        bleed into the rubber-band area on iOS. */
 
-    /* Line height scales inversely with type size. The font-size utilities
-       (text-3xl, text-5xl) carry their own tighter pairings and the hero sets
-       its own, so this 1.625 only reaches unsized body copy — the section
-       paragraphs, the footer and the menu card. */
+    /* Line height scales inversely with type size. Headings and the hero set
+       their own tighter pairings alongside their font sizes, so this 1.625
+       only reaches unsized body copy — the section paragraphs, the footer
+       and the menu card. */
     line-height: 1.625;
   }
 
@@ -257,45 +257,37 @@
 
   border: 1px solid var(--button-border);
   background-color: var(--button-bg);
-  -webkit-tap-highlight-color: transparent;
   background-image: linear-gradient(var(--button-sweep), var(--button-sweep));
   background-repeat: no-repeat;
   background-position: right center;
   background-size: 0% 100%;
   color: var(--button-text);
-  transition:
-    background-size 340ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 340ms ease,
-    color 340ms ease;
 }
 
-/* Hover is gated behind a real pointer. On touch, iOS applies :hover on tap and
-   leaves it stuck until you tap elsewhere, so the button would sit half-swept
-   after a press — which is what looked glitchy. Touch gets :active instead. */
-@media (hover: hover) {
-  .button-fill:hover {
+/* The sweep is for pointer devices only — a mouse or trackpad that can really
+   hover. Touch devices get the button at rest plus the platform's own tap
+   feedback: there is no hover on touch, a tap is far shorter than the sweep so
+   it only ever played part-way, and iOS leaves :hover stuck after a tap anyway.
+   The transition itself lives in here, so nothing can animate on touch.
+
+   The focus ring is NOT gated — that is a `focus-visible:outline` utility on
+   each button and stays available on every device. */
+@media (hover: hover) and (pointer: fine) {
+  .button-fill {
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      background-size 340ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 340ms ease,
+      color 340ms ease;
+  }
+
+  .button-fill:hover,
+  .button-fill:focus-visible {
     background-position: left center;
     background-size: 100% 100%;
     border-color: var(--button-border-hover);
     color: var(--button-text-hover);
   }
-}
-
-/* Keyboard focus and touch presses land on the same state. Declarations are
-   repeated rather than merged because a media query cannot join a selector
-   list. */
-.button-fill:focus-visible,
-.button-fill:active {
-  background-position: left center;
-  background-size: 100% 100%;
-  border-color: var(--button-border-hover);
-  color: var(--button-text-hover);
-}
-
-/* A tap lasts a fraction of the sweep, so on press it runs fast enough to
-   actually arrive instead of being cut off part-way, then eases back out. */
-.button-fill:active {
-  transition-duration: 120ms;
 }
 
 /* The mirror: dark at rest, sweeping white. Reads as the secondary of the pair
